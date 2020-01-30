@@ -33,7 +33,7 @@ const initialState = [
                 text: "make little change"
             },
         ]
-    }
+    },
 ]
 
 const listReducer = (state = initialState, action) => {
@@ -41,12 +41,13 @@ const listReducer = (state = initialState, action) => {
         case CONSTANTS.ADD_LIST:
             const newList = {
                 title: action.payload,
-                card: [],
-                id: `list-${listID}`
+                id: `list-${listID}`,
+                card: []
             }
             listID += 1
             return [...state, newList]
-        case CONSTANTS.ADD_CARD:
+
+        case CONSTANTS.ADD_CARD: {
             const newCard = {
                 text: action.payload.text,
                 id: `card-${cardID}`
@@ -61,11 +62,29 @@ const listReducer = (state = initialState, action) => {
                         ...list,
                         card: [...list.card, newCard]
                     }
-                }else {
+                } else {
                     return list
                 }
             })
             return newState
+        }
+
+        case CONSTANTS.DRAG_HAPPENED:
+            const { droppableIdStart,
+                droppableIdEnd,
+                droppableIndexStart,
+                droppableIndexEnd,
+                draggableId } = action.payload
+
+            const newState = [...state]
+            //in same list
+            if (droppableIdStart === droppableIdEnd) {
+                const list = state.find(list => droppableIdStart === list.id)
+                const card = list.card.splice(droppableIndexStart, 1)
+                list.card.splice(droppableIndexEnd, 0, ...card)
+            }
+            return newState
+
         default:
             return state
     }
