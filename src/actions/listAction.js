@@ -7,6 +7,13 @@ export const addList = title => {
     }
 }
 
+export const deleteList =(index) => {
+    return {
+        type : CONSTANTS.DELETE_LIST,
+        payload:{index}
+    }
+}
+
 export const sort = (
     droppableIdStart,
     droppableIdEnd,

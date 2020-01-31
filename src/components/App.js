@@ -30,7 +30,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { lists } = this.props
+    const { lists, dispatch } = this.props
     return (
       <DragDropContext onDragEnd={this.onDragEnd} >
         <Droppable droppableId="all-list" direction="horizontal" type="list">
@@ -43,6 +43,7 @@ class App extends React.Component {
                   title={list.title}
                   cards={list.card}
                   index={index}
+                  dispatch ={dispatch}
                 />)
               }
               <TrelloActionButton list />
