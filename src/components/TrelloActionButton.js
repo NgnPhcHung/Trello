@@ -98,7 +98,6 @@ class TrelloActionButton extends React.Component {
                             overflow: 'hidden',
                             outline: 'none',
                             border: 'none',
-
                         }}
                     />
                 </Card>

@@ -6,3 +6,21 @@ export const addCard = (listID, text) => {
         payload: { text, listID }
     }
 }
+
+export const deleteCard = (id, listIndex) => {
+    return {
+        type: CONSTANTS.DELETE_CARD,
+        payload: { id, listIndex }
+    }
+}
+
+export const editCard = (id, listIndex, value) => {
+    return {
+        type: CONSTANTS.EDIT_CARD,
+        payload: {
+            id,
+            listIndex,
+            value
+        }
+    }
+}

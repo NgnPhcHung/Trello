@@ -110,9 +110,46 @@ const listReducer = (state = initialState, action) => {
         //delete list
         case CONSTANTS.DELETE_LIST: {
             const { payload } = action
-            console.log(action,payload.index)
+            console.log(action, payload.index)
             return [...state].filter((e, i) => payload.index !== i)
-            }
+        }
+
+        //delete card
+        case CONSTANTS.DELETE_CARD: {
+            const { payload } = action
+            const { listIndex, id } = payload
+            let newState = [...state]
+            // console.log(newState[listIndex].card[id])
+            // console.log(newState[listIndex].card)
+            console.log(newState[listIndex].card.filter(i => newState[listIndex].card[id] !== i))
+            // return [...state].filter((e, i) => payload.index !== i)
+            newState[listIndex].card = newState[listIndex].card.filter(i => newState[listIndex].card[id] !== i)
+            return newState
+        }
+
+        //edit list 
+        case CONSTANTS.EDIT_LIST: {
+            const { payload } = action
+            const { value, index } = payload
+            let newState = [...state]
+            console.log(newState.title)
+            newState.map((e, i) => {
+                if (index === i) {
+                    console.log(e.title)
+                    e.title = value
+                }
+            })
+            return newState
+        }
+
+        //edit card
+        case CONSTANTS.EDIT_CARD : {
+            const { payload } = action
+            const { listIndex, id, value } = payload
+            let newState = [...state]
+            console.log(listIndex, id, value)
+            return newState
+        }
 
         default:
             return state

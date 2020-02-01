@@ -2,15 +2,25 @@ import { CONSTANTS } from '../actions'
 
 export const addList = title => {
     return {
-        type : CONSTANTS.ADD_LIST,
-        payload:title
+        type: CONSTANTS.ADD_LIST,
+        payload: title
     }
 }
 
-export const deleteList =(index) => {
+export const deleteList = (index) => {
     return {
-        type : CONSTANTS.DELETE_LIST,
-        payload:{index}
+        type: CONSTANTS.DELETE_LIST,
+        payload: { index }
+    }
+}
+
+export const editList = (value, index) => {
+    return {
+        type: CONSTANTS.EDIT_LIST,
+        payload: {
+            value,
+            index
+        }
     }
 }
 
@@ -19,12 +29,12 @@ export const sort = (
     droppableIdEnd,
     droppableIndexStart,
     droppableIndexEnd,
-    draggableId, 
+    draggableId,
     type
 ) => {
     return {
         type: CONSTANTS.DRAG_HAPPENED,
-        payload:{
+        payload: {
             droppableIdStart,
             droppableIdEnd,
             droppableIndexStart,
