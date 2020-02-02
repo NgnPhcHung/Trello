@@ -1,0 +1,9 @@
+.listRotate {
+    transform: rotate(25deg);
+    display: flex;
+    flex-direction: row;
+}
+.listContainer {
+    display: flex;
+    flex-direction: row;
+}

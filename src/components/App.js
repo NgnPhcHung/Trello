@@ -5,6 +5,7 @@ import TrelloActionButton from './TrelloActionButton'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import { sort } from '../actions'
 import styled from 'styled-components'
+import './App.css'
 
 const ListsContainer = styled.div`
   display: flex;
@@ -12,7 +13,25 @@ const ListsContainer = styled.div`
 `
 
 class App extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      isDrag: false
+    }
+  }
+
+  onDragStart = () => {
+    this.setState({
+      isDrag: true
+    })
+  }
+
   onDragEnd = (result) => {
+
+    this.setState({
+      isDrag: false
+    })
+
     const { destination, source, draggableId, type } = result
 
     if (!destination) {
@@ -32,10 +51,14 @@ class App extends React.Component {
   render() {
     const { lists, dispatch } = this.props
     return (
-      <DragDropContext onDragEnd={this.onDragEnd} >
+      <DragDropContext onDragEnd={this.onDragEnd} onDragStart={this.state.isDrag} >
         <Droppable droppableId="all-list" direction="horizontal" type="list">
-          {provided => (
-            <ListsContainer {...provided.droppableProps} ref={provided.innerRef} >
+          {(provided, snapshot) => (
+            <div
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+              className = {this.state.isDrag ? "listRotate": "listContainer"}
+            >
               {
                 lists.map((list, index) => <TrelloList
                   listID={list.id}
@@ -43,11 +66,11 @@ class App extends React.Component {
                   title={list.title}
                   cards={list.card}
                   index={index}
-                  dispatch ={dispatch}
+                  dispatch={dispatch}
                 />)
               }
               <TrelloActionButton list />
-            </ListsContainer>
+            </div>
           )}
         </Droppable>
       </DragDropContext >
@@ -55,6 +78,12 @@ class App extends React.Component {
   }
 }
 
+// const styles = {
+//   listContainer: {
+//     display: "flex",
+//     flexDirection: "row"
+//   }
+// }
 
 const mapStateToProps = state => ({
   lists: state.lists
